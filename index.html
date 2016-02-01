@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>PHP7 and Modern PHP ecosystem</title>
+
+		<meta name="description" content="PHP7 and Modern PHP ecosystem, Falkirk LUG - February 2016">
+		<meta name="author" content="Thomas Dutrion">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/engineor.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>PHP7 and Modern PHP ecosystem</h1>
+					<h3>Falkirk LUG Edinburgh February 2016</h3>
+					<div class="text-align:center;">
+						<img src="images/php.png" alt="Old PHP logo" style="max-width:100px; max-height:80px;">
+						<img src="images/php7_logo.png" alt="Logo PHP 7" style="max-width:100px; max-height:80px;">
+					</div>
+					<p>
+						<small>By <a href="https://onename.com/tdutrion">Thomas Dutrion</a> / <a href="https://twitter.com/tdutrion">@tdutrion</a> - 02/02/2016</small>
+					</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>About me</h2>
+						<ul>
+								<li>Founder & Developer / web architect at <a href="https://www.engineor.com">Engineor</a></li>
+								<li>Working with PHP since 2003</li>
+								<li>Doing my best to work properly!</li>
+						</ul>
+						<div style="margin-top: 1.2em">
+							<img src="images/tdutrion.jpg" alt="Photo Thomas Dutrion" style="max-height:200px">
+							<img src="images/engineor.png" alt="Engineor Logo" style="max-height:200px">
+						</div>
+					</section>
+					<section>
+						<h2>Scotland PHP</h2>
+						<img src="images/elephpant.png" alt="Scotland PHP logo" style="max-height: 200px"><br>
+						<p>
+							Aberdeen (1st Wednesday)<br>
+							Edinburgh (2nd Tuesday)<br>
+							Glasgow (3rd Tuesday)<br>
+							Dundee (4rd Thursday)
+						</p>
+						<a href="https://www.scotlandphp.co.uk">https://www.scotlandphp.co.uk</a>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Origins of PHP</h2>
+					</section>
+					<section>
+						<h2>Personal Home Page</h2>
+						<ul>
+							<li>1994</li>
+							<li>Rasmus Lerdorf</li>
+							<li>Simple web pages with templating, forms and database access</li>
+							<li>Not a programming language</li>
+						</ul>
+					</section>
+					<section>
+						<pre><code class="html">
+&lt;!--include /text/header.html--&gt;
+
+&lt;!--getenv HTTP_USER_AGENT--&gt;
+&lt;!--ifsubstr $exec_result Mozilla--&gt;
+  Hey, you are using Netscape!&lt;p&gt;
+&lt;!--endif--&gt;
+
+&lt;!--sql database select * from table where user='$username'--&gt;
+&lt;!--ifless $numentries 1--&gt;
+  Sorry, that record does not exist&lt;p&gt;
+&lt;!--endif exit--&gt;
+  Welcome &lt;!--$user--&gt;!&lt;p&gt;
+  You have &lt;!--$index:0--&gt; credits left in your account.&lt;p&gt;
+&lt;!--include /text/footer.html--&gt;
+						</code></pre>
+					</section>
+					<section>
+						<h2>PHP: Hypertext Preprocessor</h2>
+						<ul>
+							<li>1998</li>
+							<li>Zend founders (Zeev Suraski and Andi Gutmans) rewrite the PHP parser</li>
+							<li>Gives us PHP3, change the acronym meaning</li>
+							<li>Transforms it into a programming language (sort of)</li>
+						</ul>
+					</section>
+					<section>
+						<p>Unfortunately similar to what most people learn in universities and schools...</p>
+					</section>
+					<section>
+						<h2>PHP 4 / 5</h2>
+						<ul>
+							<li>Object oriented programming</li>
+							<li>Keeping backward compatibility</li>
+						</ul>
+					</section>
+					<section>
+						<pre><code class="php">&lt;?php
+class Car implement Vehicle
+{
+  private $colour;
+  public function hasFourWheels()
+  {
+    return true;
+  }
+}
+$car = new Car();
+var_dump($car->hasFourWheels());
+</code></pre>
+					</section>
+					<section>
+						<h2>In a nutshell</h2>
+						<ul>
+							<li>Weakly typed language</li>
+							<li>Weird inconsistencies in function naming as a result</li>
+							<li>Not designed as a programming language, became one</li>
+							<li>Easy to learn</li>
+							<li>Large community, not only developers</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Example (PHP 5)</h2>
+						<pre><code class="php">&lt;?php
+function add($item1, $item2) {
+  return $item1 + $item2;
+}
+
+var_dump(add(1, 1));
+// int(2)
+
+var_dump(add(1, 'test'));
+// int(1)
+
+var_dump(add(1, array('test')));
+// Fatal error: Uncaught Error: Unsupported operand types</code></pre>
+					</section>
+					<section>
+						<h2>Example (PHP 5)</h2>
+						<pre><code class="php">&lt;?php
+class Car {}
+function functionUsingCar(Car $car) {}
+
+$car1 = new Car();
+functionUsingCar($car1);
+
+$car2 = new stdClass();
+functionUsingCar($car2);
+// Catchable fatal error: Argument 1 passed to functionUsingCar()
+// must be an instance of Car, stdClass given</code></pre>
+					</section>
+					<section>
+						<h2>Example (PHP 5)</h2>
+						<pre><code class="php">&lt;?php
+try {
+  throw new Exception('an error occurred');
+} catch (Exception $e) {
+  echo $e->getMessage();
+  // an error occurred
+}
+
+try {
+  trigger_error('an error occurred');
+} catch (Exception $e) {
+  echo $e->getMessage();
+}
+// Notice: an error occurred in /in/MoXC0 on line 10</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>PHP 7</h2>
+					</section>
+					<section>
+						<ul>
+							<li>Scalar type declarations</li>
+							<li>Return type declarations</li>
+							<li>Null coalescing operator</li>
+							<li>Spaceship operator</li>
+							<li>Constant arrays</li>
+							<li>Anonymous classes</li>
+							<li>Expectations</li>
+							<li>...</li>
+						</ul>
+						<p><a href="http://php.net/manual/en/migration70.new-features.php" target="_blank">http://php.net/manual/en/migration70.new-features.php</a></p>
+					</section>
+					<section>
+						<h3>Scalar type declarations</h3>
+						<ul>
+							<li>coercive</li>
+							<li>strict</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Coercive scalar type</h3>
+						<p>PHP tries to convert the value to the expected type before validating the argument (default behaviour).</p>
+						<pre><code class="php">&lt;?php
+// Coercive mode
+function sumOfInts(int ...$ints)
+{
+    return array_sum($ints);
+}
+
+var_dump(sumOfInts(2, '3', 4.1));
+// result = 9 (2 + 3 + 4, 4.1 being converted to int)</code></pre>
+					</section>
+					<section>
+						<h3>Strict scalar type</h3>
+						<p>Has to be declared in each file.</p>
+						<p>Also impacts return types, PHP build-in functions and extensions.</p>
+						<pre><code class="php">&lt;?php
+declare (strict_types=1)
+// Strict mode
+function sumOfInts(int ...$ints)
+{
+    return array_sum($ints);
+}
+
+var_dump(sumOfInts(2, 3, 4));
+//int(9)
+
+var_dump(sumOfInts(2, '3', 4.1));
+// Fatal error: Uncaught TypeError: Argument 2 passed to sumOfInts()
+// must be of the type integer, string given
+// Next TypeError: Argument 3 passed to sumOfInts() must be of the
+// type integer, float given</code></pre>
+					</section>
+					<section>
+						<h2>Return types (coercive)</h2>
+						<pre><code class="php">&lt;?php
+function add($a, $b) : float {
+	return $a + $b;
+}
+var_dump(1, 2);
+// float(3)</code></pre>
+					</section>
+					<section>
+						<h2>Return types (strict)</h2>
+						<pre><code class="php">&lt;?php
+declare (strict_types=1);
+function add($a, $b) : float
+{
+    return $a + $b;
+}
+
+var_dump(1, 2);
+// float(3)
+
+var_dump(1.1, 2);
+// Fatal error: Uncaught TypeError: Return value of add() must
+// be of the type integer, float returned</code></pre>
+					</section>
+					<section>
+						<ul>
+							<li>Lots of new features, but a good language for software engineering teams</li>
+						  <li>Flexible enough (if you do not want to specify a type, don't bother, if you want values to be casted before... that's the default behaviour)</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>HHVM, Facebook and so on...</h2>
+					</section>
+					<section>
+						<blockquote>HHVM is an open-source virtual machine designed for executing programs written in Hack and PHP.</blockquote>
+						<p>Problem: how can you be sure you can run PHP programs?</p>
+					</section>
+					<section>
+						<p>Solution: Facebook and some PHP core contributors wrote a language specification based on PHP 5.6.</p>
+						<p><a href="https://github.com/php/php-langspec" target="_blank">https://github.com/php/php-langspec</a></p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>PHP FIG and PSR</h2>
+					</section>
+					<section>
+						<h3>Problem (?): PHP is too permissive</h3>
+						<ul>
+							<li>Object oriented or procedural?</li>
+							<li>All in one file or multiple directories?</li>
+							<li>Include files manually or use an autoloader?</li>
+							<li>...</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Problem (?): too many frameworks</h3>
+						<ul>
+							<li>Zend Framework</li>
+							<li>Symfony</li>
+							<li>Laravel</li>
+							<li>CakePHP</li>
+							<li>Code Igniter</li>
+							<li>...</li>
+						</ul>
+						<p>Using the community effort to write the same piece multiple times.</p>
+					</section>
+					<section>
+						<h3>Solution:</h3>
+						<h4>a Framework Interoperability Group</h4>
+					</section>
+					<section>
+						<p>Writing recommandations for interoperability.</p>
+						<p>Currently:</p>
+						<ul>
+							<li>PSR0: Autoloading (deprecated)</li>
+							<li>PSR1: Basic coding standard</li>
+							<li>PSR2: Coding style guide</li>
+							<li>PSR3: Logging</li>
+							<li>PSR4: Autoloading</li>
+							<li>PSR6: Caching</li>
+							<li>PSR7: HTTP Message Interface</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Example: Zend Framework 2</h3>
+						<table>
+							<tbody>
+								<tr>
+									<td style="width: 50%;">Zend \ Log \ LoggerInterface</td>
+									<td>PSR 3</td>
+								</tr>
+								<tr>
+									<td style="width: 50%;">Zend \ Loader \ AutoloaderFactory</td>
+									<td>PSR 4 autoloading</td>
+								</tr>
+								<tr>
+									<td style="width: 50%;">Zend \ Cache \ Storage \ StorageInterface</td>
+									<td>PSR 6</td>
+								</tr>
+								<tr>
+									<td style="width: 50%;">Zend \ MVC \ Controller \ AbstractActionController</td>
+									<td>PSR 7 Middleware (callable, invokable class)</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h3>Example: Zend Expressive</h3>
+						<table>
+							<tbody>
+								<tr>
+									<td style="width: 30%; vertical-align: middle;">Routing</td>
+									<td>
+										<ul>
+											<li>Aura.Router</li>
+											<li>FastRoute</li>
+											<li>ZF2's MVC router</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 30%; vertical-align: middle;">DI Containers</td>
+									<td>
+										<ul>
+											<li>Zend\ServiceManager</li>
+											<li>PHP-DI</li>
+											<li>Aura.DI</li>
+											<li>...</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 30%; vertical-align: middle;">Templating</td>
+									<td>
+										<ul>
+											<li>Plates</li>
+											<li>Twig</li>
+											<li>ZF2's PhpRenderer</li>
+										</ul>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Composer</h2>
+						<img src="images/logo-composer-transparent.png" alt="composer logo">
+					</section>
+					<section>
+						<h3>Dependency Manager for PHP</h3>
+					</section>
+					<section>
+						<img src="images/twitter-why-composer.png" alt="Why composer on Twitter">
+					</section>
+					<section>
+						<ul>
+							<li>Fetch dependencies from <a href="https://packagist.org/" target="_blank">Packagist (package repository)</a></li>
+							<li>Fetch dependencies from custom repositories (VCS or <a href="https://github.com/composer/satis" target="_blank">Satis</a>/<a href="https://toranproxy.com/" target="_blank">Toran Proxy</a>)</li>
+							<li>Autoload libraires (PSR 0 and PSR 4)</li>
+							<li>Allow fetching specific versions</li>
+						</ul>
+					</section>
+					<section>
+						<h3>How to use it</h3>
+						<ul>
+							<li>Requires PHP CLI</li>
+							<li>Parse <code>composer.json</code> requirements</li>
+							<li>Compute and retrieve packages</li>
+							<li>Write dependencies in <code>composer.lock</code></li>
+							<li>Inlude <code>vendor/autoload.php</code></li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h2>Thanks for having me!</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
